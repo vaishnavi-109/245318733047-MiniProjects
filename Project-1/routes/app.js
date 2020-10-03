@@ -12,6 +12,7 @@ router.get('/getH',middleware.checkToken,(req,res,next)=>{
     db.collection("hospitals").find({}).toArray( function(err, result) {
         if (err) throw err;
         res.send(result);
+        console.log("Get Hospital details");
         console.log(result);
     });
 });
@@ -22,6 +23,7 @@ router.get('/getV',middleware.checkToken,(req,res,next)=>{
     db.collection("ventilators").find({}).toArray( function(err, result) {
         if (err) throw err;
         res.send(result);
+        console.log("Get Ventilator details");
         console.log(result);
     });
 });
@@ -31,6 +33,8 @@ router.get('/getV',middleware.checkToken,(req,res,next)=>{
 router.post('/addH',middleware.checkToken,(req,res,next)=>{
     Hospital.create(req.body).then(function(hospital){
           res.send(hospital);
+          console.log("Added new hospital");
+          console.log(hospital);
       }).catch(next);
 });
 
@@ -39,6 +43,8 @@ router.post('/addH',middleware.checkToken,(req,res,next)=>{
 router.post('/addV',middleware.checkToken,(req,res,next)=>{
     Ventilator.create(req.body).then(function(ventilator){
             res.send(ventilator);
+            console.log("Added new Ventilator");
+            console.log(ventilator);
          }).catch(next);
 });
 
@@ -48,6 +54,8 @@ router.post('/addV',middleware.checkToken,(req,res,next)=>{
 router.put('/update/:id',middleware.checkToken,(req,res,next)=>{
    Ventilator.updateOne({ventilatorId: req.params.id},req.body).then((ventilator)=>{
        res.send({ventilator});
+       console.log("Updated Ventilator using Id");
+       console.log(ventilator);
     }).catch(next);
 });
 
@@ -57,6 +65,8 @@ router.put('/update/:id',middleware.checkToken,(req,res,next)=>{
 router.get('/get/:name',middleware.checkToken,(req,res,next)=>{
     db.collection("hospitals").findOne({name: req.params.name}).then(function(hospital){
         res.send(hospital);
+        console.log("search hospital by name");
+        console.log("hospital");
     });
 });
 
@@ -66,6 +76,8 @@ router.get('/get/:name',middleware.checkToken,(req,res,next)=>{
 router.get('/get/:name/:status',middleware.checkToken,(req,res,next)=>{
      db.collection("ventilators").find({name: req.params.name,status: req.params.status}).toArray().then(function(ventilator){
           res.send(ventilator);
+          console.log("search ventilator by status and hospital name");
+          console.log(ventilator);
       });
 });
 
@@ -75,6 +87,8 @@ router.get('/get/:name/:status',middleware.checkToken,(req,res,next)=>{
 router.delete('/delete/:id',middleware.checkToken,(req,res,next)=>{
     db.collection("ventilators").deleteOne({ventilatorId: req.params.id}).then(function(ventilator){
         res.send(ventilator);
+        console.log("Delete ventilator by Id");
+        console.log(ventilator);
     });
 });
 
